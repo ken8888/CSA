@@ -1,0 +1,37 @@
+.home{
+    color: white;
+    float: left;    
+}
+.nav-pills {
+    float: right;
+}
+
+.dropdown > a {
+    color: white;
+}
+
+.dropdown > ul {
+    background-color: gray;
+    border: none;
+}
+.nav >li > a:hover{
+    background-color:lightgrey;
+
+}
+.dropdown-menu a {
+    text-align: center;
+    text-decoration-color: white;
+}
+
+.link {
+    color:white;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    background-color: lightgrey;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
