@@ -1,0 +1,17 @@
+body {
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:center;
+    background-attachment: fixed;
+}
+
+.officer-nav{
+    background:gray;
+    height: 40px;
+}
+
+.dropdown-menu a {
+    text-align: center;
+    text-decoration-color: gray;
+}
