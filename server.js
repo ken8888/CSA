@@ -1,36 +1,53 @@
 var express = require('express');
-var app = express();
+var routes = require('./routes');
+var http = require('http');
 var path = require('path');
 
+var app = express();
 
-app.use(express.static(__dirname + "/public"));
+// all environments
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname, 'views'));
 
-app.get('/officers', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/officers.html'));
+
+app.set('view engine', 'ejs');
+app.use(express.favicon());
+app.use(express.logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(require('stylus').middleware(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
+
+// development only
+if ('development' == app.get('env')) {
+    app.use(express.errorHandler());
+}
+
+
+
+
+app.get('/', routes.index);
+app.get('/about', routes.about);
+app.get('/contact', routes.contact);
+
+app.get('/fileUploader', routes.fileUploader);
+
+
+var productCategoryRoute = require('./routes/productCategoryRouteConfig.js');
+var productRoute = require('./routes/productRoutConfig.js');
+
+new productCategoryRoute(app);
+new productRoute(app);
+
+
+
+
+
+
+http.createServer(app).listen(app.get('port'), function () {
+    console.log('Express server listening on port ' + app.get('port'));
 });
-
-app.get('/home', function(req, res){
-    res.sendFile(path.join(__dirname + '/public/index.html'));
-});
-
-/*app.get('/officers', function(req, res){
-    console.log("I received a GET request")
-    
-    officer1 = {
-        img: 'http://placehold.it/400x300'
-    };
-    officer2 = {
-        img: 'http://placehold.it/400x300'
-    };
-    officer3 = {
-        img: 'http://placehold.it/400x300'
-    };
-    
-    var officers = [officer1, officer2, officer3];
-    
-    res.json(officers);
-    
-});
-*/
-app.listen(3000);
-console.log("Calling from server 3000!!!!");
